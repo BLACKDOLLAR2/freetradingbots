@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml xmlns="https://developers.google.com/blockly/xml">
+  
+  <variables>
+    <variable id="trade_count">trade_count</variable>
+    <variable id="last_digit">last_digit</variable>
+  </variables>
+
+  <!-- Get Last Digit -->
+  <block type="tick_analysis" id="tick1" x="20" y="20">
+    <field name="TICK_ANALYSIS_FIELD">last_digit</field>
+    <statement name="DO">
+      
+      <!-- IF CONDITION -->
+      <block type="controls_if" id="if1">
+        <value name="IF0">
+          <block type="logic_compare" id="compare1">
+            <field name="OP">GT</field>
+            <value name="A">
+              <block type="variables_get" id="get_digit">
+                <field name="VAR" id="last_digit">last_digit</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="math_number">
+                <field name="NUM">2</field>
+              </block>
+            </value>
+          </block>
+        </value>
+
+        <!-- IF TRUE -->
+        <statement name="DO0">
+          <block type="variables_set">
+            <field name="VAR" id="trade_count">trade_count</field>
+            <value name="VALUE">
+              <block type="math_number">
+                <field name="NUM">10</field>
+              </block>
+            </value>
+          </block>
+        </statement>
+
+        <!-- ELSE -->
+        <statement name="ELSE">
+          <block type="variables_set">
+            <field name="VAR" id="trade_count">trade_count</field>
+            <value name="VALUE">
+              <block type="math_number">
+                <field name="NUM">2</field>
+              </block>
+            </value>
+          </block>
+        </statement>
+
+      </block>
+
+      <!-- REPEAT TRADES -->
+      <block type="controls_repeat_ext" id="repeat1">
+        <value name="TIMES">
+          <block type="variables_get">
+            <field name="VAR" id="trade_count">trade_count</field>
+          </block>
+        </value>
+        <statement name="DO">
+          <block type="trade" id="trade1">
+            <field name="MARKET_LIST">synthetic_index</field>
+            <field name="SYMBOL_LIST">R_100</field>
+            <field name="TRADETYPE_LIST">DIGITOVER</field>
+            <field name="DURATION">1</field>
+            <field name="DURATIONTYPE">t</field>
+            <field name="BARRIER">2</field>
+            <field name="STAKE">0.35</field>
+          </block>
+        </statement>
+      </block>
+
+    </statement>
+  </block>
+
+</xml>
